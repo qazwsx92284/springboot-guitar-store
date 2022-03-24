@@ -47,4 +47,8 @@ public class ItemService {
         List<Item> itemList = itemRepository.findAll();
         return new ResponseEntity(itemList, HttpStatus.OK);
     }
+
+    public void deleteItem(Long id) {
+        itemRepository.deleteById(id);
+    }
 }
