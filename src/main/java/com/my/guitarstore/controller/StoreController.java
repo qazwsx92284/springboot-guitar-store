@@ -31,7 +31,7 @@ public class StoreController {
     @Autowired
     private ItemService itemService;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, value="/item")
     @ApiOperation(value = SwaggerConstant.ADD_ITEM_DESC, notes = SwaggerConstant.ADD_ITEM_NOTES)
     @ApiResponses(
             value = {
