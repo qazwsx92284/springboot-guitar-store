@@ -33,6 +33,7 @@ public class ItemService {
         if(!itemRequestValidator.validateAddRequest(item))
             return new ResponseEntity(new ErrorSchema("missing key attributes in request body", "/addIem", LocalDateTime.now()), HttpStatus.BAD_REQUEST);
         log.debug("Entering the method addItem()");
+        log.info("Executing itemRepository.saveAndFlush()::");
         // insert item into repository(db)
         itemRepository.saveAndFlush(item);
 
@@ -44,11 +45,18 @@ public class ItemService {
 
     public ResponseEntity getItemList(String idToken, String apiHost) {
         log.debug("Entering method getItemList()");
+        log.info("Executing itemRepository.findAll()::");
         List<Item> itemList = itemRepository.findAll();
         return new ResponseEntity(itemList, HttpStatus.OK);
     }
 
     public void deleteItem(Long id) {
+        log.info("Executing itemRepository.deleteById()::");
         itemRepository.deleteById(id);
+    }
+
+    public void updateItem(Item item) {
+        log.info("Executing itemRepository.save()::");
+        Item updatedItem = itemRepository.save(item);
     }
 }

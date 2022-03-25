@@ -99,4 +99,33 @@ public class StoreController {
         log.debug("Entering the method deleteItem() :: StoreController class");
         itemService.deleteItem(id);
     }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value="/item")
+    @ApiOperation(value = SwaggerConstant.UPDATE_ITEM_DESC, notes = SwaggerConstant.UPDATE_ITEM_NOTES)
+    @ApiResponses(
+            value = {
+                    @ApiResponse(code = 201, message = "Item added", response = ItemRO.class),
+                    @ApiResponse(code = 400, message = Constant.ErrorMessages.INVALID_REQUEST, response = ErrorSchema.class),
+                    @ApiResponse(code = 401, message = Constant.ErrorMessages.UNAUTHORIZED, response = ErrorSchema.class),
+                    @ApiResponse(code = 403, message = Constant.ErrorMessages.FORBIDDEN, response = ErrorSchema.class),
+                    @ApiResponse(code = 404, message = Constant.ErrorMessages.NOT_FOUND, response = ErrorSchema.class),
+                    @ApiResponse(code = 500, message = Constant.ErrorMessages.INVALID_REQUEST, response = ErrorSchema.class)
+            }
+    )
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateItem(
+            @ApiParam(value = "id token. Required to invoke api",
+                    example = "id:1k3jfdi2fnv",
+                    required = false)  @RequestHeader(value="id-token") String idToken,
+            @ApiParam(value = "api host", example = "abc-cc-plane", required = false,
+                    defaultValue = "abd-cc-plane") @RequestHeader(value="api-key", required = false) String apiHost,
+            @ApiParam(value = "request item object", required = true)
+            @RequestBody @Valid final Item item)
+//            @ApiParam(value="itemId to be updated", example="1234L", required = false) @PathVariable Long itemId)
+    {
+        log.debug("Entering the method updateItem()");
+        itemService.updateItem(item);
+    }
+
+    // TODO: 3/24/2022 need to implement update method to update only changed fields & think about PathVariable
 }
