@@ -100,7 +100,7 @@ public class StoreController {
         itemService.deleteItem(id);
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value="/item")
+    @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value="/item")
     @ApiOperation(value = SwaggerConstant.UPDATE_ITEM_DESC, notes = SwaggerConstant.UPDATE_ITEM_NOTES)
     @ApiResponses(
             value = {

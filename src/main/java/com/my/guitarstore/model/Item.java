@@ -58,7 +58,7 @@ public class Item {
     @ApiModelProperty(name = "couponApplicable", value = "Indicate whether coupon is applicable or not on the item")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     @Column( name = "couponApplicable")
-    private boolean couponApplicable;
+    private Boolean couponApplicable;
 
     @ApiModelProperty(name = "sale discount", value = "Percentage of sale discount")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
