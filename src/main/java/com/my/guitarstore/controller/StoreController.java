@@ -129,8 +129,7 @@ public class StoreController {
         itemService.updateItem(item);
     }
 
-    // TODO: 3/24/2022 need to implement update method to update only changed fields & think about PathVariable
-    @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value="/item/{id}")
+    @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value="/item/{itemId}")
     @ApiOperation(value = SwaggerConstant.UPDATE_ITEM_DESC, notes = SwaggerConstant.UPDATE_ITEM_NOTES)
     @ApiResponses(
             value = {
@@ -151,7 +150,7 @@ public class StoreController {
                     defaultValue = "abd-cc-plane") @RequestHeader(value="api-key", required = false) String apiHost,
             @ApiParam(value = "request item object", required = true)
             @RequestBody @Valid final Map<Object, Object> fields,
-            @ApiParam(value="itemId to be updated", example="1234L", required = false) @PathVariable Long itemId)
+            @ApiParam(value="itemId to be updated", example="1234L", required = true) @PathVariable Long itemId)
     {
         log.debug("Entering the method updateItem()");
         itemService.updatePartialItem(fields, itemId);
