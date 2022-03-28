@@ -110,6 +110,12 @@
 			<version>4.13.1</version>
 			<scope>test</scope>
 		</dependency>
+<!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.pitest/pitest &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>org.pitest</groupId>-->
+<!--			<artifactId>pitest</artifactId>-->
+<!--			<version>1.7.4</version>-->
+<!--		</dependency>-->
 
 	</dependencies>
 
@@ -126,13 +132,12 @@
 						</exclude>
 					</excludes>
 				</configuration>
-			
 			</plugin>
-<!--			<plugin>-->
-<!--				<groupId>org.pitest</groupId>-->
-<!--				<artifactId>pitest-maven</artifactId>-->
-<!--				<version>LATEST</version>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.7.4</version>
+			</plugin>
 		</plugins>
 	</build>
 </project>

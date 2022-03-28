@@ -19,5 +19,4 @@ public class ItemRequestValidator extends ObjectRequestValidator {
             return false;
         return true;
     }
-
 }
