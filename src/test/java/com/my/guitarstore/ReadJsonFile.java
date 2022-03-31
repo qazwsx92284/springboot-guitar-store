@@ -1,8 +1,7 @@
-package resources;
+package com.my.guitarstore;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,8 +28,5 @@ public class ReadJsonFile {
         return objectMapper.readValue(inputStream, typeReference);
     }
 
-    @Test
-    void getListFromJson() throws IOException {
-        System.out.println(objectMapper.writeValueAsString(getListFromJson("src/test/java/resources/ItemList.json")));
-    }
+
 }

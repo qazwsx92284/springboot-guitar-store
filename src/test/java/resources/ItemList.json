@@ -6,12 +6,11 @@
   "itemState" : "New",
   "couponApplicable": true
 },
-  {
+  { "_comment1": "missing itemState",
     "itemId": 2,
     "amount": 2,
     "name" : "mug",
     "regularPrice" : 9.99,
-    "itemState" : "New",
     "couponApplicable": true
   },
   {
