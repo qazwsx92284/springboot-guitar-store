@@ -44,7 +44,7 @@ public class ItemService {
         log.debug("Entering the method addItem()");
         log.info("Executing itemRepository.saveAndFlush()::");
         // insert item into repository(db)
-        itemRepository.saveAndFlush(item);
+       itemRepository.saveAndFlush(item);
 
         // return response obj (map Item -> ItemRO)
         ItemRO itemRO = itemResponseMapper.mapToItemResponse(item);
