@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -31,20 +32,30 @@ class ItemServiceTest {
     @Mock
     private ItemRequestValidator itemRequestValidator;
 
-    @Mock
+
     private ItemRepository itemRepository;
 
-    Item validItem = ReadJsonFile.getItemFromJson().get(0);
 
     ItemServiceTest() throws IOException {}
 
 
     @Test
-    void addItemTest_valid_reqBody() {
+    void addItemTest_valid_reqBody() throws IOException {
+        Item validItem = ReadJsonFile.getItemFromJson().get(0);
+
         when(itemRequestValidator.validateAddRequest(any())).thenReturn(true);
         when(itemRepository.saveAndFlush(any())).thenReturn(validItem);
         ResponseEntity result = itemService.addItem(validItem, "eydifsjeifj", "traveling");
         assertEquals(HttpStatus.CREATED, result.getStatusCode());
+    }
+
+    @Test
+    void getItemListTest() throws IOException {
+        List<Item> itemList = ReadJsonFile.getItemFromJson();
+        when(itemRepository.findAll()).thenReturn(itemList);
+        ResponseEntity result = itemService.getItemList("idT", "host");
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+
     }
 
 
