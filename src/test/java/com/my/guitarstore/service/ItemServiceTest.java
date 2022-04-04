@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.my.guitarstore.ReadJsonFile;
 import com.my.guitarstore.model.Item;
 import com.my.guitarstore.repository.ItemRepository;
+import com.my.guitarstore.response.ItemRO;
 import com.my.guitarstore.util.ItemRequestValidator;
+import com.my.guitarstore.util.ItemResponseMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -32,11 +34,12 @@ class ItemServiceTest {
     @Mock
     private ItemRequestValidator itemRequestValidator;
 
-
+    @Mock
     private ItemRepository itemRepository;
 
+    @Mock
+    private ItemResponseMapper itemResponseMapper;
 
-    ItemServiceTest() throws IOException {}
 
 
     @Test
@@ -45,6 +48,7 @@ class ItemServiceTest {
 
         when(itemRequestValidator.validateAddRequest(any())).thenReturn(true);
         when(itemRepository.saveAndFlush(any())).thenReturn(validItem);
+        when(itemResponseMapper.mapToItemResponse(any())).thenReturn(new ItemRO());
         ResponseEntity result = itemService.addItem(validItem, "eydifsjeifj", "traveling");
         assertEquals(HttpStatus.CREATED, result.getStatusCode());
     }

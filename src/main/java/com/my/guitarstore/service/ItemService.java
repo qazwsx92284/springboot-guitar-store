@@ -23,10 +23,9 @@ import org.springframework.util.ReflectionUtils;
 import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.*;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class ItemService {
 
     private final IResponseMapper itemResponseMapper;
@@ -35,7 +34,7 @@ public class ItemService {
   // private final ServletContext context;
 
     @Autowired
-    private ItemRepository itemRepository;
+    private final ItemRepository itemRepository;
 
     public ResponseEntity addItem(Item item, String idToken, String apiHost) {
         // validate if required Item attributes are missing in request body
