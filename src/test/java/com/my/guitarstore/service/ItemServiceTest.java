@@ -20,7 +20,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 class ItemServiceTest {
@@ -54,13 +54,29 @@ class ItemServiceTest {
     }
 
     @Test
+    void addItemTest_invalid_reqBody() throws IOException {
+        Item invalidItem = ReadJsonFile.getItemFromJson().get(1);
+        when(itemRequestValidator.validateAddRequest(any())).thenReturn(false);
+        ResponseEntity result = itemService.addItem(invalidItem, "idT", "apiHost");
+        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+    }
+
+    @Test
     void getItemListTest() throws IOException {
         List<Item> itemList = ReadJsonFile.getItemFromJson();
         when(itemRepository.findAll()).thenReturn(itemList);
         ResponseEntity result = itemService.getItemList("idT", "host");
         assertEquals(HttpStatus.OK, result.getStatusCode());
-
     }
+
+    @Test
+    void deleteItemTest() {
+        doNothing().when(itemRepository).deleteById(any());
+        itemService.deleteItem(1234L);
+        verify(itemRepository, atLeastOnce()).deleteById(any());
+    }
+
+
 
 
 
