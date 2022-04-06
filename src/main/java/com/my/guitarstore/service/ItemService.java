@@ -136,11 +136,22 @@ public class ItemService {
                 Field field = ReflectionUtils.findField(Item.class, (String) key);
                 field.setAccessible(true);
                 if(key == "itemState")
-                    ReflectionUtils.setField(field, item.get(), Item.ItemState.valueOf(String.valueOf(value)));
+                    ReflectionUtils.setField(field, item.get(), Item.ItemState.valueOf(mapItemState(value)));
                 else
                     ReflectionUtils.setField(field, item.get(), value);
             });
             itemRepository.save(item.get());
+        }
+    }
+
+    private String mapItemState(Object value) {
+        switch (String.valueOf(value)) {
+            case "New":
+                return "NEW";
+            case "Used":
+                return "USED";
+            default:
+                throw new IllegalArgumentException("No such enum value");
         }
     }
 
