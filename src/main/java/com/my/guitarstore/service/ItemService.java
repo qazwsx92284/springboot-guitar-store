@@ -128,7 +128,7 @@ public class ItemService {
 //        return emptyNames.toArray(result);
 //    }
 
-    // TODO: 3/27/2022 enum in the request payload should take value not code. USED(Code x) Used(Value o) 
+
     public void updatePartialItem(Map<Object, Object> fields, Long id) {
         Optional<Item> item =  itemRepository.findById(id);
         if(item.isPresent()) {
