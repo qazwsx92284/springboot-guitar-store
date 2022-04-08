@@ -38,9 +38,9 @@ public class ItemResponseMapper extends  ResponseMapper {
         for (String discountType : discountMap.keySet()) {
             switch (discountType) {
                 case "saleDiscount":
-                    finalPrice = regularPrice*(100-discountMap.get(discountType));
+                    finalPrice = regularPrice*(100-discountMap.get(discountType))/100;
                 case "couponDiscount":
-                    finalPrice = finalPrice*(100- discountMap.get(discountType));
+                    finalPrice = finalPrice*(100- discountMap.get(discountType))/100;
             }
         }
         return finalPrice;

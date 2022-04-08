@@ -46,11 +46,12 @@ class ItemResponseMapperTest {
     @Test
     void calculateFinalPriceTest() {
         Map<String, Integer> discountMap = new HashMap();
-        when(objectMapper.convertValue(any(), eq(Map.class))).thenReturn(discountMap);
         Discount discount = new Discount();
         discount.setCouponDiscount(20);
+        discountMap.put("couponDiscount", discount.getCouponDiscount());
+        when(objectMapper.convertValue(any(), eq(Map.class))).thenReturn(discountMap);
         Double mockResult = itemResponseMapper.calculateFinalPrice(discount, 20d);
-        assertEquals(16d, mockResult);
+        assertEquals(Double.valueOf(16d), mockResult);
     }
 
 
