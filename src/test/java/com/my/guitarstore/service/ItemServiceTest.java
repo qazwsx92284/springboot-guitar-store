@@ -1,5 +1,6 @@
 package com.my.guitarstore.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.my.guitarstore.ReadJsonFile;
 import com.my.guitarstore.model.Item;
@@ -17,6 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -74,6 +76,30 @@ class ItemServiceTest {
         doNothing().when(itemRepository).deleteById(any());
         itemService.deleteItem(1234L);
         verify(itemRepository, atLeastOnce()).deleteById(any());
+    }
+
+    @Test
+    void updateItemTest() throws JsonProcessingException {
+        when(itemRepository.findById(any())).thenReturn(getOptionalItem());
+        doNothing().when(itemService).copyNonNullProperties(any(), any());
+        when(itemRepository.save(any())).thenReturn(new Item());
+        itemService.updateItem(getItem());
+        verify(itemRepository, times(1)).save(any());
+    }
+
+    private Optional<Item> getOptionalItem() {
+        Optional<Item> optionalItem = Optional.of(getItem());
+        return optionalItem;
+    }
+
+    private Item getItem() {
+        Item item = new Item();
+        item.setItemState(Item.ItemState.NEW);
+        item.setRegularPrice(19.99);
+        item.setAmount(2);
+        item.setItemId(1234L);
+        item.setName("String");
+        return item;
     }
 
 
