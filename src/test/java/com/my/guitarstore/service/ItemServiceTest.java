@@ -3,6 +3,7 @@ package com.my.guitarstore.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.my.guitarstore.ReadJsonFile;
+import com.my.guitarstore.exception.ItemNotFoundException;
 import com.my.guitarstore.model.Item;
 import com.my.guitarstore.repository.ItemRepository;
 import com.my.guitarstore.response.ItemRO;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -21,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -28,6 +31,7 @@ import static org.mockito.Mockito.*;
 class ItemServiceTest {
 
     @InjectMocks
+    @Spy
     private ItemService itemService;
 
     @Mock
@@ -79,12 +83,22 @@ class ItemServiceTest {
     }
 
     @Test
-    void updateItemTest() throws JsonProcessingException {
+    void updateItemTest_existingItem_exist() throws JsonProcessingException {
         when(itemRepository.findById(any())).thenReturn(getOptionalItem());
-        doNothing().when(itemService).copyNonNullProperties(any(), any());
+       // doNothing().when(itemService).copyNonNullProperties(any(), any());
         when(itemRepository.save(any())).thenReturn(new Item());
         itemService.updateItem(getItem());
         verify(itemRepository, times(1)).save(any());
+        verify(itemService, times(1)).copyNonNullProperties(any(), any());
+    }
+
+    @Test
+    void updateItemTest_existingItem_NotExist() {
+        Optional<Item> emptyOptionalItem = Optional.empty();
+        when(itemRepository.findById(any())).thenReturn(emptyOptionalItem);
+        assertThrows(ItemNotFoundException.class, () -> {
+            itemService.updateItem(getItem());
+        });
     }
 
     private Optional<Item> getOptionalItem() {

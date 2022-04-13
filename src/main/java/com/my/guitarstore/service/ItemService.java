@@ -72,10 +72,10 @@ public class ItemService {
             throw new ItemNotFoundException("Exception occurs while orchestrating update. Item with the given ID Not Found.");
         copyNonNullProperties(item, existingItem);
         log.info("Executing itemRepository.save()::");
-        System.out.println("write item");
+       /* System.out.println("write item");
         System.out.println(objectMapper.writeValueAsString(item));
         System.out.println("write existingItem");
-        System.out.println(objectMapper.writeValueAsString(existingItem));
+        System.out.println(objectMapper.writeValueAsString(existingItem));*/
 
         itemRepository.save(existingItem.get());
 //        Item updatedItem = itemRepository.save(item);
