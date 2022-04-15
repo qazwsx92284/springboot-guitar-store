@@ -101,6 +101,13 @@ class ItemServiceTest {
         });
     }
 
+    @Test
+    void copyNonNullPropertiesTest() throws JsonProcessingException {
+        Object obj1 = new Object();
+        itemService.copyNonNullProperties(obj1, getItem());
+        verify(itemService, atLeastOnce()).getNullPropertyNames(any());
+    }
+
     private Optional<Item> getOptionalItem() {
         Optional<Item> optionalItem = Optional.of(getItem());
         return optionalItem;

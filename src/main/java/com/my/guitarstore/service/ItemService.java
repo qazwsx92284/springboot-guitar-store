@@ -91,14 +91,14 @@ public class ItemService {
      */
     public void copyNonNullProperties(Object src, Object target) throws JsonProcessingException {
         BeanUtils.copyProperties(src, target, getNullPropertyNames(src));
-        System.out.println("write target");
-        System.out.println(objectMapper.writeValueAsString(target));
+//        System.out.println("write target");
+//        System.out.println(objectMapper.writeValueAsString(target));
     }
 
     /**
       업데이트하려는 obj 가 null 값을 가지고 있는 속성의 이름들을 따와서 String[] 에 저장 후 반환한다.
      */
-    public static String[] getNullPropertyNames (Object source) {
+    public String[] getNullPropertyNames (Object source) {
         final BeanWrapper src = new BeanWrapperImpl(source);
         java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
 
