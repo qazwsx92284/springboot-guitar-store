@@ -91,8 +91,7 @@ public class ItemService {
      */
     public void copyNonNullProperties(Object src, Object target) throws JsonProcessingException {
         BeanUtils.copyProperties(src, target, getNullPropertyNames(src));
-//        System.out.println("write target");
-//        System.out.println(objectMapper.writeValueAsString(target));
+
     }
 
     /**
@@ -144,7 +143,7 @@ public class ItemService {
         }
     }
 
-    private String mapItemState(Object value) {
+    protected String mapItemState(Object value) {
         switch (String.valueOf(value)) {
             case "New":
                 return "NEW";

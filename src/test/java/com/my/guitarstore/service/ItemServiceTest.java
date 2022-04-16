@@ -19,8 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -103,9 +102,40 @@ class ItemServiceTest {
 
     @Test
     void copyNonNullPropertiesTest() throws JsonProcessingException {
-        Object obj1 = new Object();
-        itemService.copyNonNullProperties(obj1, getItem());
-        verify(itemService, atLeastOnce()).getNullPropertyNames(any());
+        Item item = new Item();
+        item.setName("String");
+        itemService.copyNonNullProperties(item, getItem());
+        verify(itemService, times(1)).getNullPropertyNames(any());
+    }
+
+
+    @Test
+    void updatePartialItemTest() {
+        when(itemRepository.findById(any())).thenReturn(getOptionalItem());
+        Map<Object, Object> fields = new HashMap<>();
+        fields.put("itemId",1L);
+        fields.put("name","Fender");
+        fields.put("regularPrice", 800.99);
+        fields.put("itemState", "New");
+        when(itemRepository.save(any())).thenReturn(new Item());
+        itemService.updatePartialItem(fields, 1L);
+        verify(itemRepository, atLeastOnce()).save(any());
+//        List<Object> values = new ArrayList<>(Arrays.asList(1, 800.99, "Fender", "New"));
+//        System.out.println(values);
+//        verify(itemService, atLeastOnce()).mapItemState(eq(values));
+
+    }
+
+    @Test
+    void updatePartialItemTest_when_fieldsMap_is_empty() {
+        Item item = new Item();
+        item.setItemId(1L);
+        Optional<Item> optionalItem = Optional.of(item);
+        when(itemRepository.findById(any())).thenReturn(optionalItem);
+        Map<Object, Object> fields = new HashMap<>();
+        when(itemRepository.save(any())).thenReturn(new Item());
+        itemService.updatePartialItem(fields, 1L);
+        verify(itemRepository, atLeastOnce()).save(any());
     }
 
     private Optional<Item> getOptionalItem() {
