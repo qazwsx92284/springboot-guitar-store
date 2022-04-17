@@ -24,7 +24,7 @@ public class ExceptionHandler {
             return new ResponseEntity(new ErrorSchema(instantiationException.getCause().getLocalizedMessage(), "path", LocalDateTime.now()),
                     HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity(new ErrorSchema(e.getLocalizedMessage(), "path", LocalDateTime.now()),HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(new ErrorSchema(e.getLocalizedMessage(), "path", LocalDateTime.now()),HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
 
