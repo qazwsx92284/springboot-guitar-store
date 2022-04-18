@@ -35,7 +35,6 @@ public class AppController {
         String encodedPassword = encoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         repo.save(user);
-
         return "register_success";
     }
 
