@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -45,12 +46,14 @@ public class StoreControllerTest {
     void createItemTest() {
         when(itemService.addItem(any(), any(), any())).thenReturn(new ResponseEntity(HttpStatus.CREATED));
         ResponseEntity mockResult = storeController.createItem(idToken, host, item);
+        assertEquals(HttpStatus.CREATED, mockResult.getStatusCode());
     }
 
     @Test
     void getAllItemTest() {
         when(itemService.getItemList(any(),any())).thenReturn(new ResponseEntity(HttpStatus.OK));
         ResponseEntity mockResult = storeController.getAllItem(idToken, host);
+        assertEquals(HttpStatus.OK, mockResult.getStatusCode());
     }
 
     @Test

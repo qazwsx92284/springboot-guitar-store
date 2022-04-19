@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.ui.Model;
 
@@ -16,13 +17,16 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 public class AppControllerTest {
 
     @Mock
     private UserRepository repo;
+
+    @Mock
+    private BCryptPasswordEncoder encoder;
 
     @InjectMocks
     private AppController appController;
@@ -41,9 +45,14 @@ public class AppControllerTest {
 
     @Test
     void processRegistrationTest() {
-        String mockResult = appController.processRegistration(getUser());
+        //User mockUser = mock(User.class);
+        User mockUser = spy(User.class);
+        mockUser.setPassword("sdkfl");
+        String mockResult = appController.processRegistration(mockUser);
         when(repo.save(any())).thenReturn(getUser());
+        when(encoder.encode(any())).thenReturn("encodedPW");
         assertEquals("register_success", mockResult);
+        verify(mockUser, atLeastOnce()).setPassword(any());
     }
 
     @Test
