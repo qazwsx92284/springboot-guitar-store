@@ -19,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -78,7 +79,9 @@ public class StoreController {
                     example = "id:1k3jfdi2fnv",
                     required = true)  @RequestHeader(value="id-token") String idToken,
             @ApiParam(value = "api host", example = "abc-cc-plane", required = false,
-                    defaultValue = "abd-cc-plane") @RequestHeader(value="api-key", required = false) String apiHost)
+                    defaultValue = "abd-cc-plane") @RequestHeader(value="api-key", required = false) String apiHost,
+            @ApiParam(allowableValues = "vehicle, coverages, drivers", allowMultiple = true, value="desc for expand qeury param")
+            @RequestParam(required = false, name="expand")List<String> expand)
     {
         log.debug("Entering the method getAllItem()");
         return itemService.getItemList( idToken, apiHost);
@@ -125,9 +128,10 @@ public class StoreController {
             @ApiParam(value = "request item object", required = true)
             @RequestBody @Valid final Item item) throws JsonProcessingException
 //            @ApiParam(value="itemId to be updated", example="1234L", required = false) @PathVariable Long itemId)
-    {
-        log.debug("Entering the method updateItem()");
+    {   log.debug("Entering the method updateItem() :: StoreController class");
+        // ehck if request cache has our request
         itemService.updateItem(item);
+        log.debug("Exiting the method updateItem() :: StoreController class");
     }
 
     @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value="/item/{itemId}")
@@ -156,4 +160,6 @@ public class StoreController {
         log.debug("Entering the method updateItem()");
         itemService.updatePartialItem(fields, itemId);
     }
+
+
 }

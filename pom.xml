@@ -110,7 +110,15 @@
 			<version>4.13.1</version>
 			<scope>test</scope>
 		</dependency>
-<!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.pitest/pitest &ndash;&gt;-->
+		<!-- https://mvnrepository.com/artifact/com.hazelcast/hazelcast -->
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast</artifactId>
+			<version>5.1</version>
+		</dependency>
+
+
+		<!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.pitest/pitest &ndash;&gt;-->
 <!--		<dependency>-->
 <!--			<groupId>org.pitest</groupId>-->
 <!--			<artifactId>pitest</artifactId>-->
@@ -143,6 +151,7 @@
 						<artifactId>pitest-junit5-plugin</artifactId>
 						<version>0.8</version>
 					</dependency>
+
 				</dependencies>
 			</plugin>
 		</plugins>
